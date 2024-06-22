@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\LeagueRequest;
+use App\Models\League;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class LeagueCrudController
@@ -21,7 +23,7 @@ class LeagueCrudController extends CrudController
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
-     * 
+     *
      * @return void
      */
     public function setup()
@@ -33,7 +35,7 @@ class LeagueCrudController extends CrudController
 
     /**
      * Define what happens when the List operation is loaded.
-     * 
+     *
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
      * @return void
      */
@@ -49,7 +51,7 @@ class LeagueCrudController extends CrudController
 
     /**
      * Define what happens when the Create operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
@@ -61,11 +63,43 @@ class LeagueCrudController extends CrudController
          * Fields can be defined using the fluent syntax:
          * - CRUD::field('price')->type('number');
          */
+
+        League::saving(function($entry) {
+//            dd($entry);
+//            if ($entry->collection !== 'leagues') {
+//                return;
+//            }
+
+            $server = env('FTP_HOST');
+            $user = env('FTP_USERNAME');
+            $pass = env('FTP_PASSWORD');
+//dd($server);
+
+//            try {
+
+//            $test = Storage::disk('ftp')->get('standings/124.std');
+//            dd($test);
+
+
+
+            $leagueName = $entry->name;
+//dd($leagueName);
+            $schedule = Storage::disk('ftp')->get("sched/$leagueName.txt");
+            $standings = Storage::disk('ftp')->get("standings/$leagueName.std");
+
+            if ($schedule) {
+                $entry->schedule = $schedule;
+            }
+
+            if ($standings) {
+                $entry->standings = $standings;
+            }
+        });
     }
 
     /**
      * Define what happens when the Update operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */
