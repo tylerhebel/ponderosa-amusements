@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Ponderosa Amusements</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -48,13 +48,13 @@
                             </div>
 
                             <div class="grid grid-cols-2 gap-4">
-                                @for($i = 1; $i <= 14; $i++)
+                                @foreach ($leagues as $league)
                                     <div class="rounded-lg bg-white p-2 shadow ring-4 ring-black transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
                                         <div class="">
-                                            <h2 class="font-sans text-2xl font-semibold text-black dark:text-white tracking-wider uppercase">League 101</h2>
+                                            <h2 class="font-sans text-2xl font-semibold text-black dark:text-white tracking-wider uppercase">League {{ $league['name'] }}</h2>
                                         </div>
                                     </div>
-                                @endfor
+                                @endforeach
                             </div>
                         </div>
                     </main>
