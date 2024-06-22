@@ -2,15 +2,21 @@
 
 namespace App\Models;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class League extends Model
 {
+    use CrudTrait;
     use HasFactory;
 
-    public function schedule()
-    {
-//        return $t
-    }
+    // update mass action
+    protected $fillable = [
+        'active',
+        'description',
+        'name',
+        'standings',
+        'schedule',
+    ];
 }
